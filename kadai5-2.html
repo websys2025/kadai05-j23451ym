@@ -4,9 +4,9 @@
     <title>演習課題5-2：外部APIの呼び出しテスト</title>
 </head>
 <body>
-    <h1 id="msg">何かのAPI</h1>
+    <h1 id="msg">Give Me the Advice On API</h1>
     <form name="apiform"><p>
-        何かのフォーム：<input type="text" name="form_data">
+        Enter your Favorite Number：<input type="text" name="form_data">
         <button type="button" id="btn1" onclick="some_api(this.form)">実行</button>
     </p></form>
     
@@ -14,6 +14,12 @@
     <script>
         async function some_api(myForm) {
             // ここにコードを書く
+            const endpoint = "https://api.adviceslip.com/advice/{slip_id}";
+            const aRes = await fetch("https://api.adviceslip.com/advice/" +myForm.form_data.value); 
+            const data = await aRes.json();
+            const advice = data.slip.advice 
+            myForm.form_data.value = `${advice}`;
+            
             document.getElementById("result").innerHTML += myForm.form_data.value+"<br />";
             document.apiform.reset();
         }
